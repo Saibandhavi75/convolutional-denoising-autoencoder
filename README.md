@@ -26,6 +26,7 @@ Include the neural network model diagram.
 * Convolutional Layer
 * Pooling Layer
 * Up Sampling Layer. Make sure the input shape and output shape of the model are identical.
+
 5.Pass test data for validating manually.
 
 6.Plot the predictions for visualization.
@@ -110,13 +111,43 @@ autoencoder.fit(x_train_noisy, x_train_scaled,
                 shuffle=True,
                 validation_data=(x_test_noisy, x_test_scaled))
 ```
-## Plot Metrics Graph::
+## Plot Metrics Graph:
 ```
 import pandas as pd
 metrics = pd.DataFrame(autoencoder.history.history)
 metrics[['loss','val_loss']].plot()
 ```
+## Predict Using the model:
+```
+decoded_imgs = autoencoder.predict(x_test_noisy)
+```
+## Plot the original, noisy & reconstructed images:
+```
+n = 10
+plt.figure(figsize=(20, 4))
+for i in range(1, n + 1):
+    # Display original
+    ax = plt.subplot(3, n, i)
+    plt.imshow(x_test_scaled[i].reshape(28, 28))
+    plt.gray()
+    ax.get_xaxis().set_visible(False)
+    ax.get_yaxis().set_visible(False)
 
+    # Display noisy
+    ax = plt.subplot(3, n, i+n)
+    plt.imshow(x_test_noisy[i].reshape(28, 28))
+    plt.gray()
+    ax.get_xaxis().set_visible(False)
+    ax.get_yaxis().set_visible(False)    
+
+    # Display reconstruction
+    ax = plt.subplot(3, n, i + 2*n)
+    plt.imshow(decoded_imgs[i].reshape(28, 28))
+    plt.gray()
+    ax.get_xaxis().set_visible(False)
+    ax.get_yaxis().set_visible(False)
+plt.show()
+```
 ## OUTPUT
 
 ### Training Loss, Validation Loss Vs Iteration Plot
@@ -129,4 +160,5 @@ Include a few sample images here.
 
 
 
-## RESULT
+## RESULT:
+Thus we have successfully developed a convolutional autoencoder for image denoising application.
