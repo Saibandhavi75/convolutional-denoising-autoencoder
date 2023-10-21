@@ -11,7 +11,8 @@ Autoencoder is an unsupervised artificial neural network that is trained to copy
 
 ## Convolution Autoencoder Network Model
 
-Include the neural network model diagram.
+![image](https://github.com/Saibandhavi75/convolutional-denoising-autoencoder/assets/94208895/d426394f-2982-4dad-a66e-2d355d665660)
+
 
 ## DESIGN STEPS
 
@@ -79,26 +80,29 @@ plt.show()
 ```
 input_img = keras.Input(shape=(28, 28, 1))
 
-x=layers.Conv2D(16, (3,3),activation = 'relu',padding='same')(input_img)
+x=layers.Conv2D(16,(5,5),activation='relu',padding='same')(input_img)
 x=layers.MaxPooling2D((2,2),padding='same')(x)
-x=layers.Conv2D(8, (3,3),activation = 'relu',padding='same')(x)
+x=layers.Conv2D(4,(3,3),activation='relu',padding='same')(x)
 x=layers.MaxPooling2D((2,2),padding='same')(x)
-x=layers.Conv2D(8, (4,4),activation = 'relu',padding='same')(x)
+x=layers.Conv2D(4,(3,3),activation='relu',padding='same')(x)
+x=layers.MaxPooling2D((2,2),padding='same')(x)
+x=layers.Conv2D(8,(7,7),activation='relu',padding='same')(x)
 encoded = layers.MaxPooling2D((2, 2), padding='same')(x)
 
-# Encoder output dimension is ## Mention the dimention ##
-
-# Write your decoder here
-x=layers.Conv2D(8, (3,3),activation = 'relu',padding='same')(encoded)
+x=layers.Conv2D(4,(3,3),activation='relu',padding='same')(encoded)
 x=layers.UpSampling2D((2,2))(x)
-x=layers.Conv2D(8, (3,3),activation = 'relu',padding='same')(x)
+x=layers.Conv2D(4,(3,3),activation='relu',padding='same')(x)
 x=layers.UpSampling2D((2,2))(x)
-x=layers.Conv2D(16, (3,3),activation = 'relu')(x)
+x=layers.Conv2D(8,(5,5),activation='relu',padding='same')(x)
 x=layers.UpSampling2D((2,2))(x)
-
+x=layers.Conv2D(16,(5,5),activation='relu',padding='same')(x)
+x=layers.UpSampling2D((2,2))(x)
+x=layers.Conv2D(16,(5,5),activation='relu')(x)
+x=layers.UpSampling2D((1,1))(x)
 decoded = layers.Conv2D(1, (3, 3), activation='sigmoid', padding='same')(x)
 
 autoencoder = keras.Model(input_img, decoded)
+
 autoencoder.summary()
 ```
 ## Compile and Fit the model::
@@ -152,7 +156,8 @@ plt.show()
 
 ### Training Loss, Validation Loss Vs Iteration Plot
 
-![image](https://github.com/Saibandhavi75/convolutional-denoising-autoencoder/assets/94208895/9abd8dac-4c12-4cde-ad63-38739fc9e394)
+![image](https://github.com/Saibandhavi75/convolutional-denoising-autoencoder/assets/94208895/79cd8aee-4f72-4a66-9285-d46263a2420c)
+
 
 
 ### Original vs Noisy Vs Reconstructed Image
